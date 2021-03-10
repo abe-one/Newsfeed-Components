@@ -87,6 +87,13 @@ const data = [
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`,
   },
+  {
+    title: `testitle`,
+    date: `testdate`,
+    firstParagraph: `tp1`,
+    secondParagraph: `tp2`,
+    thirdParagraph: `tp3`,
+  },
 ];
 
 /*
@@ -109,14 +116,9 @@ function paraMaker(p, ...classes) {
   para.textContent = p;
   if (classes.length > 0) {
     para.classList.add(classes.toString());
-  } else {
-    return para;
   }
   return para;
 }
-
-// Debugging
-// document.querySelector(`.articles`).prepend(paraMaker(`test para`, `yee`));
 
 function articleMaker({
   title,
@@ -152,21 +154,27 @@ function articleMaker({
   article.appendChild(articleP3);
   article.appendChild(articleButton);
 
+  articleButton.addEventListener(`click`, () =>
+    article.classList.toggle(`article-open`)
+  );
+
   return article;
 }
 
-let testArticle = articleMaker({
-  title: `testitle`,
-  date: `testdate`,
-  firstParagraph: `tp1`,
-  secondParagraph: `tp2`,
-  thirdParagraph: `tp3`,
-});
+let articleDiv = document.querySelector(`.articles`);
 
 // Debugging
+// let testArticle = articleMaker({
+//   title: `testitle`,
+//   date: `testdate`,
+//   firstParagraph: `tp1`,
+//   secondParagraph: `tp2`,
+//   thirdParagraph: `tp3`,
+// });
 // testArticle.classList.add(`article-open`);
 // console.log(testArticle);
-// document.querySelector(`.articles`).appendChild(testArticle);
+// articleDiv.appendChild(testArticle);
+
 /*
   Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
   This listener should toggle the class 'article-open' on div.article.
@@ -176,6 +184,11 @@ let testArticle = articleMaker({
   Step 4: Outside your function now, loop over the data. At each iteration you'll use your component
   to create a div.article element and append it to the DOM inside div.articles (see index.html).
 
+  */
+
+data.forEach((articleobj) => articleDiv.appendChild(articleMaker(articleobj)));
+
+/*
   Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
   Refresh the page to see the new article.
 */
