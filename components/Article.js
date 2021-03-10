@@ -109,25 +109,64 @@ function paraMaker(p, ...classes) {
   para.textContent = p;
   if (classes.length > 0) {
     para.classList.add(classes.toString());
+  } else {
+    return para;
   }
   return para;
 }
 
-document.querySelector(`.articles`).prepend(paraMaker(`test para`));
+// Debugging
+// document.querySelector(`.articles`).prepend(paraMaker(`test para`, `yee`));
 
-function articleMaker({ title, date, para1, para2, para3 }) {
+function articleMaker({
+  title,
+  date,
+  firstParagraph,
+  secondParagraph,
+  thirdParagraph,
+}) {
+  // debugger;
+  // Declare variables
   let article = document.createElement(`div`);
   let articleTitle = document.createElement(`h2`);
-  let articledate = paraMaker(date, `date`);
-  let articlep1 = paraMaker(para1);
-  let articlep2 = paraMaker(para2);
-  let articlep3 = paraMaker(para3);
-  let 
+  let articleDate = paraMaker(date, `date`);
+  let articleP1 = paraMaker(firstParagraph);
+  let articleP2 = paraMaker(secondParagraph);
+  let articleP3 = paraMaker(thirdParagraph);
+  let articleButton = document.createElement(`span`);
+
+  // Assign values
 
   articleTitle.textContent = title;
+  articleButton.textContent = `+`;
+
+  // Assign class
+  article.classList.add(`article`);
+  articleButton.classList.add(`expandButton`);
+
+  // Sete nodes
+  article.appendChild(articleTitle);
+  article.appendChild(articleDate);
+  article.appendChild(articleP1);
+  article.appendChild(articleP2);
+  article.appendChild(articleP3);
+  article.appendChild(articleButton);
+
+  return article;
 }
 
+let testArticle = articleMaker({
+  title: `testitle`,
+  date: `testdate`,
+  firstParagraph: `tp1`,
+  secondParagraph: `tp2`,
+  thirdParagraph: `tp3`,
+});
 
+// Debugging
+// testArticle.classList.add(`article-open`);
+// console.log(testArticle);
+// document.querySelector(`.articles`).appendChild(testArticle);
 /*
   Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
   This listener should toggle the class 'article-open' on div.article.
