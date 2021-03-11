@@ -88,7 +88,7 @@ const data = [
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`,
   },
   {
-    title: `testitle`,
+    title: `test itle`,
     date: `testdate`,
     firstParagraph: `tp1`,
     secondParagraph: `tp2`,
@@ -111,13 +111,32 @@ const data = [
   </div>
 */
 
-function paraMaker(p, ...classes) {
-  let para = document.createElement(`p`);
-  para.textContent = p;
+// not DRY enough
+// function divMaker(dtext, ...classes) {
+//   let div = document.createElement(`div`);
+//   div.textContent = dtext;
+//   if (classes.length > 0) {
+//     div.classList.add(classes.toString());
+//   }
+//   return div;
+// }
+
+// function paraMaker(ptext, ...classes) {
+//   let para = document.createElement(`p`);
+//   para.textContent = ptext;
+//   if (classes.length > 0) {
+//     para.classList.add(classes.toString());
+//   }
+//   return para;
+// }
+
+function elementMaker(tag, textArg, ...classes) {
+  let lmnt = document.createElement(tag);
+  lmnt.textContent = textArg;
   if (classes.length > 0) {
-    para.classList.add(classes.toString());
+    lmnt.classList.add(classes.toString());
   }
-  return para;
+  return lmnt;
 }
 
 function articleMaker({
@@ -129,22 +148,23 @@ function articleMaker({
 }) {
   // debugger;
   // Declare variables
-  let article = document.createElement(`div`);
-  let articleTitle = document.createElement(`h2`);
-  let articleDate = paraMaker(date, `date`);
-  let articleP1 = paraMaker(firstParagraph);
-  let articleP2 = paraMaker(secondParagraph);
-  let articleP3 = paraMaker(thirdParagraph);
-  let articleButton = document.createElement(`span`);
+  // let article = document.createElement(`div`);
+  let article = elementMaker("div", "", "article");
+  let articleTitle = elementMaker("h2", title);
+  let articleDate = elementMaker("p", date, `date`);
+  let articleP1 = elementMaker("p", firstParagraph);
+  let articleP2 = elementMaker("p", secondParagraph);
+  let articleP3 = elementMaker("p", thirdParagraph);
+  let articleButton = elementMaker("span", "+", "expandButton");
 
   // Assign values
 
-  articleTitle.textContent = title;
-  articleButton.textContent = `+`;
+  // articleTitle.textContent = title;
+  // articleButton.textContent = `+`;
 
   // Assign class
-  article.classList.add(`article`);
-  articleButton.classList.add(`expandButton`);
+  // article.classList.add(`article`);
+  // articleButton.classList.add(`expandButton`);
 
   // Sete nodes
   article.appendChild(articleTitle);
@@ -162,8 +182,9 @@ function articleMaker({
 }
 
 let articleDiv = document.querySelector(`.articles`);
-
+data.forEach((articleobj) => articleDiv.appendChild(articleMaker(articleobj)));
 // Debugging
+// console.log(elementMaker(`div`, `talky`, `1`, `2`));
 // let testArticle = articleMaker({
 //   title: `testitle`,
 //   date: `testdate`,
@@ -185,8 +206,6 @@ let articleDiv = document.querySelector(`.articles`);
   to create a div.article element and append it to the DOM inside div.articles (see index.html).
 
   */
-
-data.forEach((articleobj) => articleDiv.appendChild(articleMaker(articleobj)));
 
 /*
   Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
